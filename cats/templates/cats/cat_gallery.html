@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Галлерея котяточек и собачек</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pets/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form action="saved">
+        <input type="submit" value="К сохранённым" />
+    </form>
+    <button class="reload-button" id="reload-button">Перезагрузить страницу</button>
+    <h1>Галерея картиночек</h1>
+    {% if message %}
+        <p style="color:red;">{{ message }}</p>
+    {% endif %}
+    <div id="cat-container">
+        {% for cat in cats %}
+            <div class="cat-item">
+                <img src="{{ cat.url }}" alt="Cat Image" width="300px">
+                <button class="save-button" data-cat-id="{{ cat.id }}" data-cat-url="{{ cat.url }}" {% if cat.id in saved_cat_ids %}disabled{% endif %}>
+                    {% if cat.id in saved_cat_ids %}Saved{% else %}Сохранить{% endif %}
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Кнопка возврата наверх -->
+    <button id="scroll-to-top">&#8679;</button>
+
+    <script src="{% static 'pets/js/galleryScripts.js' %}"></script>
+</body>
+</html>
