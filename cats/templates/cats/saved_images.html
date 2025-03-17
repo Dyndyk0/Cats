@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Сохранённые котяточи и собачки</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pets/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <form action="/">
+        <input type="submit" value="Обратно к случайности" />
+    </form>
+    <h1>Галерея сохраненных картиночек</h1>
+    {% if message %}
+        <p style="color:red;">{{ message }}</p>
+    {% endif %}
+    <div id="cat-container">
+        {% for cat in cats %}
+            <div class="cat-item">
+                <img src="{{ cat.url }}" alt="Cat Image" width="300">
+                 <button class="save-button" data-cat-id="{{ cat.cat_id }}"  {% if cat.id in saved_cat_ids %}disabled{% endif %}  >
+                 {% if cat.id in saved_cat_ids %}Deleted{% else %}Удалить{% endif %}
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Кнопка возврата наверх -->
+    <button id="scroll-to-top">&#8679;</button>
+
+    <script src="{% static 'pets/js/savedScripts.js' %}"></script>
+</body>
+</html>
